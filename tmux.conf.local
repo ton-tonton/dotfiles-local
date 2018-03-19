@@ -5,11 +5,15 @@ bind C-a send-prefix
 
 # mouse mode
 set -g mouse on
-# set -g status-right '#{prefix_highlight} | %a %Y-%m-%d %H:%M'
+
+# status bar
+set -g status-bg green
+set -g status-fg black
+set -g status-right '#{prefix_highlight} | tontonton'
 
 # force a reload of the config file
 unbind r
-bind r source-file ~/.tmux.conf
+bind r source-file ~/.tmux.conf \; display-message "Config reloaded..."
 
 # switch panes using Alt-arrow without prefix
 bind -n M-Left select-pane -L
