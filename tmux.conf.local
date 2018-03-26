@@ -7,7 +7,7 @@ bind C-a send-prefix
 set -g mouse on
 
 # status bar
-set -g status-left '[#S] | '
+set -g status-left '#S '
 set -g status-right '#{prefix_highlight} | #(echo $USER)'
 
 # force a reload of the config file
