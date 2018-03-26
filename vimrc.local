@@ -5,8 +5,8 @@ autocmd BufWritePre * %s/\s\+$//e
 " (useful for handling the permission-denied error)
 command! W w !sudo tee % > /dev/null
 
-" Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
+" Keep your cursor centered vertically on the screen
+set so=999
 
 " Ignore case when searching
 set ignorecase
