@@ -7,8 +7,12 @@ bind C-a send-prefix
 set -g mouse on
 
 # status bar
-set -g status-left '#S '
-set -g status-right '#{prefix_highlight} | #(echo $USER)'
+battery="#{battery_status_fg} #{battery_icon} #{battery_percentage}"
+date="#[fg=#93A1A1]%a %d %h %H:%M"
+
+set -g status-interval 5
+set -g status-left '#[fg=cyan]#S '
+set -g status-right "#{prefix_highlight} $date $battery "
 
 # force a reload of the config file
 unbind r
@@ -18,7 +22,17 @@ bind r source-file ~/.tmux.conf \; display-message "Config reloaded..."
 unbind ^A
 bind ^A select-pane -t :.+
 
+# tmux-colors-solarized config
 set -g @colors-solarized 'dark'
+
+# tmux-battery config
+set -g @batt_charged_icon "🌈"
+set -g @batt_charging_icon "🔥"
+set -g @batt_attached_icon "🌈"
+set -g @batt_full_charge_icon "🌈"
+set -g @batt_high_charge_icon "🌈"
+set -g @batt_medium_charge_icon "🌈"
+set -g @batt_low_charge_icon "😰"
 
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
@@ -26,7 +40,7 @@ set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
 set -g @plugin 'nhdaly/tmux-better-mouse-mode'
-set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'seebi/tmux-colors-solarized'
+set -g @plugin 'tmux-plugins/tmux-battery'
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
