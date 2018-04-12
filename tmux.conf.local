@@ -9,10 +9,11 @@ set -g mouse on
 # status bar
 battery="#{battery_status_fg} #{battery_icon} #{battery_percentage}"
 date="#[fg=#93A1A1]%a %d %h %H:%M"
+is_keys_off="#[fg=red]#([ $(tmux show-option -qv key-table) = 'off' ] && echo 'OFF')#[default]"
 
 set -g status-interval 5
 set -g status-left '#[fg=cyan]#S '
-set -g status-right "#{prefix_highlight} $date $battery "
+set -g status-right "#{prefix_highlight} $is_keys_off $date $battery "
 
 # force a reload of the config file
 unbind r
@@ -22,6 +23,19 @@ bind r source-file ~/.tmux.conf \; display-message "Config reloaded..."
 unbind ^A
 bind ^A select-pane -t :.+
 
+# Turn off prefix
+bind -T root F12  \
+  set prefix None \;\
+  set key-table off \;\
+  if -F '#{pane_in_mode}' 'send-keys -X cancel' \;\
+  refresh-client -S \;\
+
+# Turn on prefix
+bind -T off F12 \
+  set -u prefix \;\
+  set -u key-table \;\
+  refresh-client -S
+
 # tmux-colors-solarized config
 set -g @colors-solarized 'dark'
 
@@ -30,9 +44,9 @@ set -g @batt_charged_icon "🌈"
 set -g @batt_charging_icon "🔥"
 set -g @batt_attached_icon "🌈"
 set -g @batt_full_charge_icon "🌈"
-set -g @batt_high_charge_icon "🌈"
-set -g @batt_medium_charge_icon "🌈"
-set -g @batt_low_charge_icon "😰"
+set -g @batt_high_charge_icon "😐"
+set -g @batt_medium_charge_icon "😨"
+set -g @batt_low_charge_icon "😱"
 
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
