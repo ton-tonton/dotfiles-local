@@ -1,0 +1,4 @@
+user_host="#[fg=cyan]#(whoami)#[default]@#H"
+
+set -g status-position top
+set -g status-right "#{prefix_highlight} $is_keys_off  #{sysstat_cpu} | #{sysstat_mem} | #{sysstat_loadavg} | $user_host"

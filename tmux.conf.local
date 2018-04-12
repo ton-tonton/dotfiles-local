@@ -36,6 +36,10 @@ bind -T off F12 \
   set -u key-table \;\
   refresh-client -S
 
+# Load remote config for remote session
+if-shell 'test -n "$SSH_CLIENT"' \
+   'source-file ~/.tmux.conf.remote'
+
 # tmux-colors-solarized config
 set -g @colors-solarized 'dark'
 
