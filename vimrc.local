@@ -20,6 +20,9 @@ set ffs=unix,dos,mac
 " Height of the command bar
 set cmdheight=2
 
+" Eliminating delays on key
+set ttimeoutlen=0
+
 set background=dark
 colorscheme solarized
 
