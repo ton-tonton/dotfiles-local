@@ -6,7 +6,7 @@ bind C-a send-prefix
 # mouse mode
 set -g mouse on
 
-set -g status-style bg='#222121',fg='#ffa727'
+set -g status-style bg='#686767',fg='#ffa727'
 
 # status bar
 battery="#{battery_status_fg} #{battery_icon} #{battery_percentage}"
