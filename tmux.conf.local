@@ -6,6 +6,8 @@ bind C-a send-prefix
 # mouse mode
 set -g mouse on
 
+set -g status-style bg='#222121',fg='#ffa727'
+
 # status bar
 battery="#{battery_status_fg} #{battery_icon} #{battery_percentage}"
 date="#[fg=#93A1A1]%a %d %h %H:%M"
@@ -41,24 +43,33 @@ if-shell 'test -n "$SSH_CLIENT"' \
    'source-file ~/.tmux.conf.remote'
 
 # tmux-colors-solarized config
-set -g @colors-solarized 'dark'
+# set -g @colors-solarized 'dark'
 
 # tmux-battery config
-set -g @batt_charged_icon "🌈"
-set -g @batt_charging_icon "🔥"
-set -g @batt_attached_icon "🌈"
-set -g @batt_full_charge_icon "🌈"
-set -g @batt_high_charge_icon "😐"
-set -g @batt_medium_charge_icon "😨"
-set -g @batt_low_charge_icon "😱"
+set -g @batt_icon_charge_tier8 '🌈'
+set -g @batt_icon_charge_tier7 '😎'
+set -g @batt_icon_charge_tier6 '🤔'
+set -g @batt_icon_charge_tier5 '🤨'
+set -g @batt_icon_charge_tier4 '😐'
+set -g @batt_icon_charge_tier3 '😶'
+set -g @batt_icon_charge_tier2 '😨'
+set -g @batt_icon_charge_tier1 '😱'
+set -g @batt_icon_status_charged '🌈'
+set -g @batt_icon_status_charging '🔥'
+set -g @batt_icon_status_discharging '🔋'
+set -g @batt_color_status_primary_charged '#3daee9'
+set -g @batt_color_status_primary_charging '#3daee9'
 
 # List of plugins
-set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin 'tmux-plugins/tmux-sensible'
-set -g @plugin 'tmux-plugins/tmux-resurrect'
-set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
-set -g @plugin 'nhdaly/tmux-better-mouse-mode'
-set -g @plugin 'seebi/tmux-colors-solarized'
-set -g @plugin 'tmux-plugins/tmux-battery'
+set -g @tpm_plugins '                 \
+  tmux-plugins/tpm                    \
+  tmux-plugins/tmux-sensible          \
+  tmux-plugins/tmux-resurrect         \
+  tmux-plugins/tmux-prefix-highlight  \
+  nhdaly/tmux-better-mouse-mode       \
+  tmux-plugins/tmux-battery           \
+'
+# set -g @plugin 'seebi/tmux-colors-solarized'
+
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
