@@ -24,9 +24,6 @@ bindkey '\e[B' history-search-forward
 # Disable sound errors in Zsh
 setopt NO_BEEP
 
-# Fish-like fast/unobtrusive autosuggestions for zsh
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
 [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"
 
