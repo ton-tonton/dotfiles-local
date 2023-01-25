@@ -57,14 +57,20 @@ set -g @batt_icon_charge_tier1 '😱'
 set -g @batt_icon_status_charged '🌈'
 set -g @batt_icon_status_charging '🔥'
 set -g @batt_icon_status_discharging '🔋'
+set -g @batt_icon_status_attached '🔧'
 set -g @batt_color_status_primary_charged '#3daee9'
 set -g @batt_color_status_primary_charging '#3daee9'
+
+# tmux-continuum
+set -g @continuum-restore 'on'
+set -g @continuum-save-interval '60'
 
 # List of plugins
 set -g @tpm_plugins '                 \
   tmux-plugins/tpm                    \
   tmux-plugins/tmux-sensible          \
   tmux-plugins/tmux-resurrect         \
+  tmux-plugins/tmux-continuum         \
   tmux-plugins/tmux-prefix-highlight  \
   nhdaly/tmux-better-mouse-mode       \
   tmux-plugins/tmux-battery           \
