@@ -4,6 +4,9 @@ export PAGER='less'
 export PATH=/usr/local/bin:$PATH
 export NVM_DIR="$HOME/.nvm"
 
+# Case insensitivity auto complete
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
 # Autocompletion
 autoload -Uz compinit && compinit
 
