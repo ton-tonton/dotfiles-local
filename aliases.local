@@ -1,6 +1,7 @@
 alias ls='ls -GFh'
 alias be='bundle exec'
 alias d='docker'
+alias de='docker exec'
 alias dc='docker-compose'
 alias dce='docker-compose exec'
 alias py='python'

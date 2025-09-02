@@ -31,11 +31,15 @@ setopt NO_BEEP
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
 
 # asdf Java setup
-. ~/.asdf/plugins/java/set-java-home.zsh
+[ -d "$HOME/.asdf/plugins/java" ] && . "$HOME/.asdf/plugins/java/set-java-home.zsh"
 
-eval "$(starship init zsh)"
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi
 
-eval "$(gh copilot alias -- zsh)"
+if command -v gh >/dev/null 2>&1; then
+  eval "$(gh copilot alias -- zsh)"
+fi
 
 # Keep it at bottom of file
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
