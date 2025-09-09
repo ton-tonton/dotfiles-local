@@ -1,8 +1,8 @@
 [user]
-	name = ton-tonton
-	email = phantom.ness@windowslive.com
+  name = ton-tonton
+  email = phantom.ness@windowslive.com
 [core]
-	editor = vim
+  editor = vim
 [alias]
-	br = branch
+  br = branch
   cm = commit

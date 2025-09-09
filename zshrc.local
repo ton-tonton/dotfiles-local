@@ -1,8 +1,13 @@
 export EDITOR='vim'
 export VISUAL='vim'
 export PAGER='less'
-export PATH=$HOME/.docker/bin:/usr/local/bin:$PATH
 export NVM_DIR="$HOME/.nvm"
+
+# PATH configuration - add directories in order of preference
+CUSTOM_PATH="$HOME/.asdf/shims"                       # ASDF version manager
+CUSTOM_PATH="$CUSTOM_PATH:$HOME/.docker/bin"          # Docker CLI tools
+CUSTOM_PATH="$CUSTOM_PATH:/usr/local/bin:$PATH"       # Local binaries
+export PATH="$CUSTOM_PATH"
 
 # Case insensitivity auto complete
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
