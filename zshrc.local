@@ -1,10 +1,9 @@
 export EDITOR='vim'
 export VISUAL='vim'
 export PAGER='less'
-export NVM_DIR="$HOME/.nvm"
 
 # PATH configuration - add directories in order of preference
-CUSTOM_PATH="$HOME/.asdf/shims"                       # ASDF version manager
+CUSTOM_PATH="/opt/homebrew/opt/postgresql@18/bin"     # PostgreSQL 18
 CUSTOM_PATH="$CUSTOM_PATH:$HOME/.docker/bin"          # Docker CLI tools
 CUSTOM_PATH="$CUSTOM_PATH:/usr/local/bin:$PATH"       # Local binaries
 export PATH="$CUSTOM_PATH"
@@ -31,13 +30,6 @@ bindkey '\e[B' history-search-forward
 # Disable sound errors in Zsh
 setopt NO_BEEP
 
-# Loads nvm
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
-
-# asdf Java setup
-[ -d "$HOME/.asdf/plugins/java" ] && . "$HOME/.asdf/plugins/java/set-java-home.zsh"
-
 if command -v starship > /dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
@@ -45,9 +37,6 @@ fi
 if command -v gh > /dev/null 2>&1; then
   eval "$(gh copilot alias -- zsh)"
 fi
-
-# Keep it at bottom of file
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # Initialize mise version manager if available
 if command -v mise > /dev/null 2>&1; then
