@@ -3,9 +3,10 @@ export VISUAL='vim'
 export PAGER='less'
 
 # PATH configuration - add directories in order of preference
-CUSTOM_PATH="/opt/homebrew/opt/postgresql@18/bin"     # PostgreSQL 18
-CUSTOM_PATH="$CUSTOM_PATH:$HOME/.docker/bin"          # Docker CLI tools
-CUSTOM_PATH="$CUSTOM_PATH:/usr/local/bin:$PATH"       # Local binaries
+CUSTOM_PATH="/opt/homebrew/opt/postgresql@18/bin"               # PostgreSQL 18
+CUSTOM_PATH="$CUSTOM_PATH:$HOME/.docker/bin"                    # Docker CLI tools
+CUSTOM_PATH="$CUSTOM_PATH:$HOME/.antigravity/antigravity/bin"   # Antigravity tools
+CUSTOM_PATH="$CUSTOM_PATH:/usr/local/bin:$PATH"                 # Local binaries
 export PATH="$CUSTOM_PATH"
 
 # Case insensitivity auto complete
