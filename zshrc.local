@@ -36,10 +36,6 @@ if command -v starship > /dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
 
-if command -v gh > /dev/null 2>&1; then
-  eval "$(gh copilot alias -- zsh)"
-fi
-
 # Initialize mise version manager if available
 if command -v mise > /dev/null 2>&1; then
   eval "$(mise activate zsh)"
