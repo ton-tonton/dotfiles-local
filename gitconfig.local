@@ -2,7 +2,7 @@
   name = ton-tonton
   email = phantom.ness@windowslive.com
 [core]
-  editor = vim
+  editor = nvim
 [alias]
   br = branch
   cm = commit

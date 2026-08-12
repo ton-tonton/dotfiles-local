@@ -10,16 +10,57 @@ set -g mouse on
 set -g set-titles on
 set -g set-titles-string "#S:#I:#W" #session:window-index:window-name
 
-set -g status-style bg='#686767',fg='#ffa727'
+# ── TokyoNight Moon palette ───────────────────────────────
+# Same palette family as the Neovim colorscheme (folke/tokyonight.nvim, moon),
+# but deliberately darker with a purple accent. lualine sits directly above this
+# bar, so matching it exactly made the two impossible to tell apart.
+tn_bg="#191b29"      # bar background — darker than lualine's #1e2030
+tn_bg_hl="#2f334d"   # secondary segment — darker than lualine's #3b4261
+tn_accent="#c099ff"  # purple; lualine uses blue. "#82aaff" blue, "#4fd6be" teal
+tn_fg="#c8d3f5"
+tn_fg_dark="#828bb8"
+tn_dark="#1b1d2b"    # ink on the accent block
+tn_yellow="#ffc777"
+
+# terminal capabilities
+# tmux-256color (not screen-256color) so italics and LSP undercurl survive inside tmux
+set -g default-terminal "tmux-256color"
+set -as terminal-features ",*:RGB"
+set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
+set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}/%d::%p2%{256}/%d::%p3%%{256}%d%;m'
+# needed for image preview (snacks.nvim) and OSC sequences from Ghostty
+set -g allow-passthrough on
+set -g focus-events on
+set -sg escape-time 10
+
+# panes / copy mode / messages
+# NOTE: leave window-style unset. It is what lets Neovim's transparent
+# background show Ghostty's blur through tmux.
+set -g pane-border-style "fg=$tn_bg_hl"
+set -g pane-active-border-style "fg=$tn_accent"
+set -g mode-style "fg=$tn_accent,bg=$tn_bg_hl"
+set -g message-style "fg=$tn_accent,bg=$tn_bg_hl"
+set -g message-command-style "fg=$tn_accent,bg=$tn_bg_hl"
 
 # status bar
-battery="#{battery_status_fg} #{battery_icon} #{battery_percentage}"
-date="#[fg=#93A1A1]%a %d %h %H:%M"
-is_keys_off="#[fg=red]#([ $(tmux show-option -qv key-table) = 'off' ] && echo 'OFF')#[default]"
-
+set -g status-style "fg=$tn_fg_dark,bg=$tn_bg"
+set -g status-justify "left"
+set -g status-left-length 100
+set -g status-right-length 100
 set -g status-interval 5
-set -g status-left '#[fg=cyan]#S '
-set -g status-right "#{prefix_highlight} $is_keys_off $date $battery "
+
+battery="#{battery_status_fg}#{battery_icon} #{battery_percentage}"
+date="%a %d %h %H:%M"
+is_keys_off="#([ $(tmux show-option -qv key-table) = 'off' ] && echo '#[fg=#ff757f]OFF ')"
+
+set -g status-left "#[fg=$tn_dark,bg=$tn_accent,bold] #S #[fg=$tn_accent,bg=$tn_bg,nobold] "
+set -g status-right "#{prefix_highlight}#[fg=$tn_fg_dark,bg=$tn_bg] $is_keys_off#[fg=$tn_fg,bg=$tn_bg_hl] $date #[fg=$tn_dark,bg=$tn_accent,bold] $battery "
+
+setw -g window-status-separator ""
+setw -g window-status-style "NONE,fg=$tn_fg_dark,bg=$tn_bg"
+setw -g window-status-format " #I #W#{?window_flags,#{window_flags}, } "
+setw -g window-status-current-format "#[fg=$tn_accent,bg=$tn_bg_hl,bold] #I #W#{?window_flags,#{window_flags}, } "
+setw -g window-status-activity-style "underscore,fg=$tn_fg_dark,bg=$tn_bg"
 
 # force a reload of the config file
 unbind r
@@ -62,8 +103,13 @@ set -g @batt_icon_status_charged '🌈'
 set -g @batt_icon_status_charging '🔥'
 set -g @batt_icon_status_discharging '🔋'
 set -g @batt_icon_status_attached '🔧'
-set -g @batt_color_status_primary_charged '#3daee9'
-set -g @batt_color_status_primary_charging '#3daee9'
+# dark ink, because the battery segment sits on the accent block
+set -g @batt_color_status_primary_charged "$tn_dark"
+set -g @batt_color_status_primary_charging "$tn_dark"
+
+# tmux-prefix-highlight config
+set -g @prefix_highlight_output_prefix "#[fg=$tn_yellow]#[bg=$tn_bg]#[fg=$tn_dark]#[bg=$tn_yellow]"
+set -g @prefix_highlight_output_suffix ""
 
 # tmux-continuum
 set -g @continuum-restore 'on'
