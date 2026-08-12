@@ -5,6 +5,9 @@ autocmd BufWritePre * %s/\s\+$//e
 " (useful for handling the permission-denied error)
 command! W w !sudo tee % > /dev/null
 
+" Hybrid line numbers: absolute on the cursor line, relative on the others
+set relativenumber
+
 " Keep your cursor centered vertically on the screen
 set so=999
 
@@ -32,3 +35,88 @@ set wildmenu
 " Config vim-airline plugin
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='base16'
+
+" Highlight every search match. Both use the same orange, the current match
+" is the brighter one.
+" Search    = the other matches, dim orange
+" CurSearch = the match the cursor is on, full solarized orange
+set hlsearch
+
+function! s:SearchColors() abort
+  " The other matches: dim orange
+  highlight Search guibg=#7a4022 guifg=#eee8d5 gui=NONE
+    \ ctermbg=94 ctermfg=254 cterm=NONE
+
+  " CurSearch = the match the cursor is on after you press Enter.
+  " IncSearch = the match previewed while you are still typing.
+  " Both are the same thing to your eye, so give them the same bright orange.
+  let l:current = 'guibg=#e85d22 guifg=#002b36 gui=NONE'
+    \ . ' ctermbg=202 ctermfg=235 cterm=NONE'
+  execute 'highlight CurSearch' l:current
+  execute 'highlight IncSearch' l:current
+endfunction
+
+call s:SearchColors()
+
+augroup search_colors
+  autocmd!
+  " A colorscheme change resets every highlight group, so set them again
+  autocmd ColorScheme * call s:SearchColors()
+augroup END
+
+" Briefly highlight the text that was just yanked.
+" Pink on purpose: a yank is not a search, so it should not look like one.
+function! s:YankColor() abort
+  highlight HighlightedYank guibg=#d06c6a guifg=#002b36 gui=NONE
+    \ ctermbg=167 ctermfg=235 cterm=NONE
+endfunction
+
+call s:YankColor()
+
+let s:yank_hl_match = []
+let s:yank_hl_timer = -1
+
+function! s:ClearYankHighlight(...) abort
+  if s:yank_hl_timer != -1
+    call timer_stop(s:yank_hl_timer)
+    let s:yank_hl_timer = -1
+  endif
+  if !empty(s:yank_hl_match)
+    " [window id, match id] - the yank may have happened in another window
+    silent! call matchdelete(s:yank_hl_match[1], s:yank_hl_match[0])
+    let s:yank_hl_match = []
+  endif
+endfunction
+
+function! s:HighlightYank() abort
+  " Skip deletes and changes, they fire this event too
+  if v:event.operator !=# 'y'
+    return
+  endif
+  call s:ClearYankHighlight()
+
+  let l:first = line("'[")
+  let l:last = line("']")
+
+  if v:event.regtype ==# 'V'
+    " Linewise: the whole lines
+    let l:pattern = '\%>' . (l:first - 1) . 'l\%<' . (l:last + 1) . 'l.*'
+  elseif v:event.regtype[0] ==# "\<C-v>"
+    " Blockwise: a rectangle of virtual columns
+    let l:pattern = '\%>' . (l:first - 1) . 'l\%<' . (l:last + 1) . 'l'
+      \ . '\%>' . (virtcol("'[") - 1) . 'v\%<' . (virtcol("']") + 1) . 'v.'
+  else
+    " Charwise: from the start mark to the end mark, both included
+    let l:pattern = '\%' . l:first . 'l\%' . col("'[") . 'c\_.\{-}'
+      \ . '\%' . l:last . 'l\%' . col("']") . 'c.'
+  endif
+
+  let s:yank_hl_match = [win_getid(), matchadd('HighlightedYank', l:pattern, 100)]
+  let s:yank_hl_timer = timer_start(400, function('s:ClearYankHighlight'))
+endfunction
+
+augroup highlight_yank
+  autocmd!
+  autocmd TextYankPost * call s:HighlightYank()
+  autocmd ColorScheme * call s:YankColor()
+augroup END

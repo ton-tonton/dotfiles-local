@@ -6,6 +6,10 @@ bind C-a send-prefix
 # mouse mode
 set -g mouse on
 
+# title
+set -g set-titles on
+set -g set-titles-string "#S:#I:#W" #session:window-index:window-name
+
 set -g status-style bg='#686767',fg='#ffa727'
 
 # status bar
