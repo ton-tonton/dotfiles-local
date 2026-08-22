@@ -39,8 +39,8 @@ set -sg escape-time 10
 set -g pane-border-style "fg=$tn_bg_hl"
 set -g pane-active-border-style "fg=$tn_accent"
 set -g mode-style "fg=$tn_accent,bg=$tn_bg_hl"
-set -g message-style "fg=$tn_accent,bg=$tn_bg_hl"
-set -g message-command-style "fg=$tn_accent,bg=$tn_bg_hl"
+set -g message-style "fg=$tn_accent,bg=$tn_bg_hl,fill=$tn_bg"
+set -g message-command-style "fg=$tn_accent,bg=$tn_bg_hl,fill=$tn_bg"
 
 # status bar
 set -g status-style "fg=$tn_fg_dark,bg=$tn_bg"
