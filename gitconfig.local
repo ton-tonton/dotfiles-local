@@ -3,9 +3,25 @@
   email = phantom.ness@windowslive.com
 [core]
   editor = nvim
+  pager = delta
 [alias]
   br = branch
   cm = commit
   wta = worktree add
   wtr = worktree remove
   wtl = worktree list
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  syntax-theme = Visual Studio Dark+
+  navigate = true  # use n and N to move between diff sections
+  dark = true      # or `light = true`, or omit for auto-detection
+  line-numbers = true
+
+  line-numbers-zero-style  = "#8b949e"
+  line-numbers-minus-style = "#f85149"
+  line-numbers-plus-style  = "#3fb950"
+  line-numbers-left-style  = "#30363d"
+  line-numbers-right-style = "#30363d"
+[merge]
+  conflictStyle = zdiff3
