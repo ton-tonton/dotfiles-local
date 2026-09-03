@@ -12,8 +12,7 @@ set -g set-titles-string "#S:#I:#W" #session:window-index:window-name
 
 # ── TokyoNight Moon palette ───────────────────────────────
 # Same palette family as the Neovim colorscheme (folke/tokyonight.nvim, moon),
-# but deliberately darker with a purple accent. lualine sits directly above this
-# bar, so matching it exactly made the two impossible to tell apart.
+# but deliberately darker with a purple accent.
 tn_bg="#191b29"      # bar background — darker than lualine's #1e2030
 tn_bg_hl="#2f334d"   # secondary segment — darker than lualine's #3b4261
 tn_accent="#c099ff"  # purple; lualine uses blue. "#82aaff" blue, "#4fd6be" teal
@@ -49,12 +48,12 @@ set -g status-left-length 100
 set -g status-right-length 100
 set -g status-interval 5
 
-battery="#{battery_status_fg}#{battery_icon} #{battery_percentage}"
-date="%a %d %h %H:%M"
 is_keys_off="#([ $(tmux show-option -qv key-table) = 'off' ] && echo '#[fg=#ff757f]OFF ')"
+# Red SYNC while synchronize-panes is on, so "typing into every pane" is never a surprise.
+sync_flag="#{?pane_synchronized,#[fg=#ff757f]SYNC ,}"
 
 set -g status-left "#[fg=$tn_dark,bg=$tn_accent,bold] #S #[fg=$tn_accent,bg=$tn_bg,nobold] "
-set -g status-right "#{prefix_highlight}#[fg=$tn_fg_dark,bg=$tn_bg] $is_keys_off#[fg=$tn_fg,bg=$tn_bg_hl] $date #[fg=$tn_dark,bg=$tn_accent,bold] $battery "
+set -g status-right "#{prefix_highlight}#[fg=$tn_fg_dark,bg=$tn_bg] $sync_flag$is_keys_off"
 
 setw -g window-status-separator ""
 setw -g window-status-style "NONE,fg=$tn_fg_dark,bg=$tn_bg"
@@ -90,23 +89,6 @@ if-shell 'test -n "$SSH_CLIENT"' \
 # tmux-colors-solarized config
 # set -g @colors-solarized 'dark'
 
-# tmux-battery config
-set -g @batt_icon_charge_tier8 '🌈'
-set -g @batt_icon_charge_tier7 '😎'
-set -g @batt_icon_charge_tier6 '🤔'
-set -g @batt_icon_charge_tier5 '🤨'
-set -g @batt_icon_charge_tier4 '😐'
-set -g @batt_icon_charge_tier3 '😶'
-set -g @batt_icon_charge_tier2 '😨'
-set -g @batt_icon_charge_tier1 '😱'
-set -g @batt_icon_status_charged '🌈'
-set -g @batt_icon_status_charging '🔥'
-set -g @batt_icon_status_discharging '🔋'
-set -g @batt_icon_status_attached '🔧'
-# dark ink, because the battery segment sits on the accent block
-set -g @batt_color_status_primary_charged "$tn_dark"
-set -g @batt_color_status_primary_charging "$tn_dark"
-
 # tmux-prefix-highlight config
 set -g @prefix_highlight_output_prefix "#[fg=$tn_yellow]#[bg=$tn_bg]#[fg=$tn_dark]#[bg=$tn_yellow]"
 set -g @prefix_highlight_output_suffix ""
@@ -123,7 +105,6 @@ set -g @tpm_plugins '                 \
   tmux-plugins/tmux-continuum         \
   tmux-plugins/tmux-prefix-highlight  \
   nhdaly/tmux-better-mouse-mode       \
-  tmux-plugins/tmux-battery           \
 '
 # set -g @plugin 'seebi/tmux-colors-solarized'
 
