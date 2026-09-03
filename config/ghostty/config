@@ -1,0 +1,154 @@
+# Ghostty Configuration - Productivity Optimized
+# ================================================
+
+# Font Configuration
+# ------------------
+# Your current font with improved settings
+font-family = "JetBrainsMonoNL Nerd Font Mono"
+font-size = 16
+
+# Thai Font
+# Range U+0E00-U+0E7F is the full Thai block, including all vowel and tone marks.
+font-codepoint-map = U+0E00-U+0E7F=Thonburi
+
+# Disable ligatures for clearer code editing
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
+
+font-thicken = true
+
+# Theme
+# -----
+theme = TokyoNight Moon
+
+# Selection & Clipboard
+# ---------------------
+copy-on-select = clipboard
+
+# Keep selection visible after copying
+selection-clear-on-copy = false
+
+# Clear selection when typing
+selection-clear-on-typing = true
+
+# Cursor Configuration
+# --------------------
+cursor-style = block
+
+# Blinking cursor with visible color
+cursor-style-blink = true
+cursor-color = #ff79c6
+
+# Thicker cursor for better visibility
+adjust-cursor-thickness = 2
+cursor-text = cell-foreground
+
+# Alt/Option+click to move cursor
+cursor-click-to-move = true
+
+# Window Management
+# -----------------
+window-padding-x = 8
+window-padding-y = 8
+
+# Remember window position and size
+window-save-state = always
+window-inherit-font-size = true
+window-inherit-working-directory = false
+tab-inherit-working-directory = true
+split-inherit-working-directory = true
+
+# Background transparent
+# background = #2b2340
+# background-opacity = 0.777
+# background-blur = 60
+
+# Cleaner floating look
+macos-window-shadow = false
+macos-titlebar-style = transparent
+
+# Dim unfocused splits for focus
+unfocused-split-opacity = 0.85
+
+# Scrollback
+# ----------
+
+# ~100MB scrollback buffer
+scrollback-limit = 100000000
+scroll-to-bottom = keystroke
+
+# Mouse
+# -----
+mouse-hide-while-typing = true
+mouse-scroll-multiplier = 3
+
+# Shift+click extends selection
+mouse-shift-capture = false
+
+# Shell Integration
+# -----------------
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
+
+# Quick Terminal (macOS) / Quick Access
+# -------------------------------------
+# quick-terminal-position = center
+# quick-terminal-screen = main
+# quick-terminal-animation-duration = 0.1
+
+# Performance & Behavior
+# ----------------------
+wait-after-command = false
+abnormal-command-exit-runtime = 2500
+grapheme-width-method = unicode
+
+# Links
+# -----
+link-url = true
+link-previews = true
+
+# Working directory behavior
+working-directory = home
+
+# Keybindings - Productivity Shortcuts
+# ------------------------------------
+
+# Tab management
+keybind = cmd+t=new_tab
+keybind = cmd+w=close_surface
+keybind = cmd+shift+w=close_window
+keybind = cmd+shift+right=next_tab
+keybind = cmd+shift+left=previous_tab
+
+# Split management
+keybind = cmd+d=new_split:right
+keybind = cmd+shift+d=new_split:down
+
+# Navigate splits
+keybind = cmd+right=goto_split:right
+keybind = cmd+left=goto_split:left
+keybind = cmd+up=goto_split:up
+keybind = cmd+down=goto_split:down
+
+# Quick terminal toggle (disabled)
+# keybind = global:cmd+grave_accent=toggle_quick_terminal
+
+# Copy/Paste
+keybind = cmd+c=copy_to_clipboard
+keybind = cmd+v=paste_from_clipboard
+
+# Scrolling
+keybind = shift+page_up=scroll_page_up
+keybind = shift+page_down=scroll_page_down
+
+# Font size adjustments
+keybind = cmd+plus=increase_font_size:1
+keybind = cmd+minus=decrease_font_size:1
+keybind = cmd+0=reset_font_size
+
+# Reload config
+keybind = cmd+shift+comma=reload_config
+
+# Open config file
+keybind = cmd+shift+o=open_config
