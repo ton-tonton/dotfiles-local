@@ -23,6 +23,12 @@ function zvm_after_init() {
   # up/down filter history by what is already typed
   bindkey '^[[A' history-substring-search-up
   bindkey '^[[B' history-substring-search-down
+
+  # reset fzf bindings
+  if zle -la fzf-history-widget; then
+    bindkey "^R" fzf-history-widget
+    bindkey "^T" fzf-file-widget
+  fi
 }
 
 zinit light jeffreytse/zsh-vi-mode
