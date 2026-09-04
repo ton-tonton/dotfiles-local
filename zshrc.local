@@ -1,3 +1,16 @@
+# Pager
+export MANROFFOPT="-c"
+if command -v bat >/dev/null 2>&1; then
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+elif command -v batcat >/dev/null 2>&1; then
+  export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
+fi
+
+export EDITOR='nvim'
+export VISUAL='nvim'
+export PAGER='less'
+export HOMEBREW_NO_ENV_HINTS=1
+
 # PATH configuration - add directories in order of preference
 CUSTOM_PATH="/opt/homebrew/opt/postgresql@18/bin"               # PostgreSQL 18
 CUSTOM_PATH="$CUSTOM_PATH:$HOME/.docker/bin"                    # Docker CLI tools
@@ -20,6 +33,14 @@ zstyle ':completion:*' menu select
 
 # Make completion case-insensitive
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# Edit command buffer
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X' edit-command-line
+
+# Expands history expressions: !!, !$ then press space
+bindkey ' ' magic-space
 
 # Initialize starship
 if command -v starship > /dev/null 2>&1; then

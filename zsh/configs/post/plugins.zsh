@@ -10,6 +10,7 @@ function zvm_config() {
   ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BEAM
   ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
   ZVM_VISUAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
+  ZVM_VI_EDITOR='nvim'
 }
 
 function zvm_after_init() {
