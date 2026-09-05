@@ -68,6 +68,9 @@ split-inherit-working-directory = true
 macos-window-shadow = false
 macos-titlebar-style = transparent
 
+# Left Option sends Alt for keybindings in terminal programs or shells
+macos-option-as-alt = left
+
 # Dim unfocused splits for focus
 unfocused-split-opacity = 0.85
 
