@@ -14,22 +14,18 @@ function zvm_config() {
 }
 
 function zvm_after_init() {
-  bindkey "^A" beginning-of-line
-  bindkey "^E" end-of-line
-  bindkey "^K" kill-line
-  bindkey "^Y" accept-and-hold
-  bindkey "^N" insert-last-word
-  bindkey "^Q" push-line-or-edit
+  # accept the autosuggestion one word at a time
+  bindkey "^[[1;5C" forward-word      # ctrl+right
+  bindkey "^[[1;5D" backward-word     # ctrl+left
 
   # up/down filter history by what is already typed
   bindkey '^[[A' history-substring-search-up
   bindkey '^[[B' history-substring-search-down
 
   # reset fzf bindings
-  if zle -la fzf-history-widget; then
-    bindkey "^R" fzf-history-widget
-    bindkey "^T" fzf-file-widget
-  fi
+  bindkey "^R" fzf-history-widget
+  bindkey "^T" fzf-file-widget
+  bindkey "^F" fzf-file-widget-all
 }
 
 zinit light jeffreytse/zsh-vi-mode
