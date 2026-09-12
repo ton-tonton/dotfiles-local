@@ -10,8 +10,7 @@ set -g mouse on
 set -g set-titles on
 set -g set-titles-string "#S:#I:#W" #session:window-index:window-name
 
-# ── TokyoNight Moon palette ───────────────────────────────
-# Same palette family as the Neovim colorscheme (folke/tokyonight.nvim, moon),
+# TokyoNight Moon palette
 # but deliberately darker with a purple accent.
 tn_bg="#191b29"      # bar background — darker than lualine's #1e2030
 tn_bg_hl="#2f334d"   # secondary segment — darker than lualine's #3b4261
@@ -22,7 +21,6 @@ tn_dark="#1b1d2b"    # ink on the accent block
 tn_yellow="#ffc777"
 
 # terminal capabilities
-# tmux-256color (not screen-256color) so italics and LSP undercurl survive inside tmux
 set -g default-terminal "tmux-256color"
 set -as terminal-features ",*:RGB"
 set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
@@ -33,13 +31,17 @@ set -g focus-events on
 set -sg escape-time 10
 
 # panes / copy mode / messages
-# NOTE: leave window-style unset. It is what lets Neovim's transparent
-# background show Ghostty's blur through tmux.
 set -g pane-border-style "fg=$tn_bg_hl"
 set -g pane-active-border-style "fg=$tn_accent"
 set -g mode-style "fg=$tn_accent,bg=$tn_bg_hl"
 set -g message-style "fg=$tn_accent,bg=$tn_bg_hl,fill=$tn_bg"
 set -g message-command-style "fg=$tn_accent,bg=$tn_bg_hl,fill=$tn_bg"
+
+# Quick pane resizing (repeatable)
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
 
 # status bar
 set -g status-style "fg=$tn_fg_dark,bg=$tn_bg"
@@ -86,9 +88,6 @@ bind -T off F12 \
 if-shell 'test -n "$SSH_CLIENT"' \
    'source-file ~/.tmux.conf.remote'
 
-# tmux-colors-solarized config
-# set -g @colors-solarized 'dark'
-
 # tmux-prefix-highlight config
 set -g @prefix_highlight_output_prefix "#[fg=$tn_yellow]#[bg=$tn_bg]#[fg=$tn_dark]#[bg=$tn_yellow]"
 set -g @prefix_highlight_output_suffix ""
@@ -106,7 +105,6 @@ set -g @tpm_plugins '                 \
   tmux-plugins/tmux-prefix-highlight  \
   nhdaly/tmux-better-mouse-mode       \
 '
-# set -g @plugin 'seebi/tmux-colors-solarized'
 
 # Install first: git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
