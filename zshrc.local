@@ -13,6 +13,7 @@ export HOMEBREW_NO_ENV_HINTS=1
 
 # PATH configuration - add directories in order of preference
 CUSTOM_PATH="/opt/homebrew/opt/postgresql@18/bin"               # PostgreSQL 18
+CUSTOM_PATH="/opt/homebrew/opt/mysql@9.7/bin"                   # MySQL 9.7
 CUSTOM_PATH="$CUSTOM_PATH:$HOME/.docker/bin"                    # Docker CLI tools
 CUSTOM_PATH="$CUSTOM_PATH:$HOME/.antigravity/antigravity/bin"   # Antigravity tools
 CUSTOM_PATH="$CUSTOM_PATH:$HOME/.local/bin"                     # uv tool binaries
