@@ -47,7 +47,7 @@ bind -r L resize-pane -R 5
 set -g status-style "fg=$tn_fg_dark,bg=$tn_bg"
 set -g status-justify "left"
 set -g status-left-length 100
-set -g status-right-length 100
+set -g status-right-length 150
 set -g status-interval 5
 
 is_keys_off="#([ $(tmux show-option -qv key-table) = 'off' ] && echo '#[fg=#ff757f]OFF ')"
@@ -55,7 +55,7 @@ is_keys_off="#([ $(tmux show-option -qv key-table) = 'off' ] && echo '#[fg=#ff75
 sync_flag="#{?pane_synchronized,#[fg=#ff757f]SYNC ,}"
 
 set -g status-left "#[fg=$tn_dark,bg=$tn_accent,bold] #S #[fg=$tn_accent,bg=$tn_bg,nobold] "
-set -g status-right "#{prefix_highlight}#[fg=$tn_fg_dark,bg=$tn_bg] $sync_flag$is_keys_off"
+set -g status-right "#{prefix_highlight}#[fg=$tn_fg_dark,bg=$tn_bg] $sync_flag$is_keys_off#[fg=$tn_fg,bg=$tn_bg_hl] #{pane_current_path} "
 
 setw -g window-status-separator ""
 setw -g window-status-style "NONE,fg=$tn_fg_dark,bg=$tn_bg"
