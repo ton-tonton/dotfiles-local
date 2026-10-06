@@ -3,6 +3,9 @@ set -g prefix C-a
 unbind C-b
 bind C-a send-prefix
 
+# turn off second prefix C-s
+set -g prefix2 None
+
 # mouse mode
 set -g mouse on
 
