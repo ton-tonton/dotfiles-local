@@ -13,30 +13,22 @@ function zvm_config() {
   ZVM_VI_EDITOR='nvim'
 }
 
-# Right arrow: accept one word of the autosuggestion when the cursor is at
-# the end of the line; otherwise move one character as usual.
-# The leading "_" keeps zsh-autosuggestions from wrapping this widget, so
-# POSTDISPLAY (the suggestion text) is still visible here.
-function _autosuggest_accept_word_or_forward_char() {
-  if [[ -n $POSTDISPLAY && $CURSOR -eq ${#BUFFER} ]]; then
-    zle forward-word
+# Accept one suggestion word at end of line, else move one char.
+function accept-word-or-forward-char() {
+  local typed_length=$(( ${#BUFFER} - ${#POSTDISPLAY} ))
+  if [[ -n $POSTDISPLAY && $CURSOR -eq $typed_length ]]; then
+    zle .forward-word
   else
-    zle vi-forward-char
+    zle .vi-forward-char
   fi
 }
 
 function zvm_after_init() {
-  # right: accept one word; shift+right: accept the whole suggestion
-  zle -N _autosuggest_accept_word_or_forward_char
-  bindkey "^[[C" _autosuggest_accept_word_or_forward_char    # right
-  bindkey "^[OC" _autosuggest_accept_word_or_forward_char    # right (app mode)
-  bindkey "^[[1;2C" autosuggest-accept                       # shift+right
+  zle -N accept-word-or-forward-char
+  bindkey "^[[C" accept-word-or-forward-char    # right
+  bindkey "^[OC" accept-word-or-forward-char    # right
 
   bindkey "^[[1;5D" backward-word     # ctrl+left
-
-  # up/down filter history by what is already typed
-  bindkey '^[[A' history-substring-search-up
-  bindkey '^[[B' history-substring-search-down
 
   # reset fzf bindings
   bindkey "^R" fzf-history-widget
@@ -48,9 +40,17 @@ zinit light jeffreytse/zsh-vi-mode
 
 # ---------- turbo-loaded plugins ----------
 
+# Keep this order: highlighting, history search, autosuggestions.
+# up/down: search history; shift+right: accept whole suggestion.
 zinit wait lucid for \
-  atload'_zsh_autosuggest_start' \
-    zsh-users/zsh-autosuggestions \
-  zsh-users/zsh-history-substring-search \
   atinit'ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay' \
-    zdharma-continuum/fast-syntax-highlighting
+    zdharma-continuum/fast-syntax-highlighting \
+  atload'
+    bindkey "^[[A" history-substring-search-up
+    bindkey "^[[B" history-substring-search-down' \
+    zsh-users/zsh-history-substring-search \
+  atload'
+    ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=(accept-word-or-forward-char)
+    _zsh_autosuggest_start
+    bindkey "^[[1;2C" autosuggest-accept' \
+    zsh-users/zsh-autosuggestions
